@@ -20,6 +20,9 @@ echo '# Sub-Store变量' >> ~/.bashrc
 echo 'export SUB_STORE_FRONTEND_PATH="$FRONTEND_DIR"' >> ~/.bashrc
 echo 'export SUB_STORE_MMDB_COUNTRY_PATH="$DATA_DIR/GeoLite2-Country.mmdb"' >> ~/.bashrc
 echo 'export SUB_STORE_MMDB_ASN_PATH="$DATA_DIR/GeoLite2-ASN.mmdb"' >> ~/.bashrc
+echo 'export SUB_STORE_BACKEND_API_PORT=19993' >> ~/.bashrc
+echo 'export SUB_STORE_FRONTEND_PORT=19992' >> ~/.bashrc
+
 
 . ~/.bashrc
 

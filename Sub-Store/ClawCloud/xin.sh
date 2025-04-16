@@ -84,6 +84,8 @@ grep -q "INSTALL_DIR=\"\$HOME/Sub-Store\"" ~/.bashrc || {
   echo 'export SUB_STORE_FRONTEND_PATH="$FRONTEND_DIR"' >> ~/.bashrc
   echo 'export SUB_STORE_MMDB_COUNTRY_PATH="$DATA_DIR/GeoLite2-Country.mmdb"' >> ~/.bashrc
   echo 'export SUB_STORE_MMDB_ASN_PATH="$DATA_DIR/GeoLite2-ASN.mmdb"' >> ~/.bashrc
+  echo 'export SUB_STORE_BACKEND_API_PORT=19993' >> ~/.bashrc
+  echo 'export SUB_STORE_FRONTEND_PORT=19992' >> ~/.bashrc
 }
 
 # 加载环境变量
@@ -156,8 +158,8 @@ if pm2 list | grep -q "http-meta.*online" && pm2 list | grep -q "Sub-Store.*onli
   # 显示访问信息
   ipv4_address=$(curl 4.icanhazip.com 2>/dev/null)
   log "Sub-Store 已成功安装，您可以通过以下地址访问:"
-  log "- 本地访问: http://127.0.0.1:3001"
-  log "- 网络访问: http://${ipv4_address}:3001"
+  log "- 本地访问: http://127.0.0.1:19992"
+  log "- 网络访问: http://${ipv4_address}:19992"
 else
   log "服务启动异常，请检查日志:"
   log "- 查看日志: pm2 logs"
