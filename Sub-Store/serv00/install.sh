@@ -50,7 +50,7 @@ download_with_retry() {
 }
 
 # 主程序开始
-log "开始安装 s..."
+log "开始安装 Sub-Store..."
 
 # 检查依赖
 if ! check_dependencies; then
@@ -60,7 +60,7 @@ if ! check_dependencies; then
 fi
 
 # 检查是否已安装
-if [ -d "$HOME/s" ] && [ -f "$HOME/s/sub-store.bundle.js" ]; then
+if [ -d "$HOME/s" ] && [ -f "$HOME/Sub-Store/sub-store.bundle.js" ]; then
   read -p "检测到已存在安装，是否继续? (y/n): " confirm
   if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
     exit 0
@@ -69,9 +69,9 @@ fi
 
 # 设置环境变量
 log "配置环境变量..."
-grep -q "INSTALL_DIR=\"\$HOME/s\"" ~/.bashrc || {
+grep -q "INSTALL_DIR=\"\$HOME/Sub-Store\"" ~/.bashrc || {
   echo '# 基本文件夹变量' >> ~/.bashrc
-  echo 'export INSTALL_DIR="$HOME/s"' >> ~/.bashrc
+  echo 'export INSTALL_DIR="$HOME/Sub-Store"' >> ~/.bashrc
   echo 'export DATA_DIR="$INSTALL_DIR/data"' >> ~/.bashrc
   echo 'export FRONTEND_DIR="$INSTALL_DIR/frontend"' >> ~/.bashrc
 
@@ -143,15 +143,15 @@ chmod +x "$DATA_DIR/http-meta"
 # 启动服务
 log "启动 http-meta 服务..."
 pm2 delete http-meta 2>/dev/null || true
-pm2 start "$DATA_DIR/http-meta.bundle.js" --name "h"
+pm2 start "$DATA_DIR/http-meta.bundle.js" --name "http-meta"
 
 log "启动 Sub-Store 服务..."
 pm2 delete Sub-Store 2>/dev/null || true
-pm2 start sub-store.bundle.js --name "s"
+pm2 start sub-store.bundle.js --name "Sub-Store"
 
 # 检查服务
 sleep 3
-if pm2 list | grep -q "h.*online" && pm2 list | grep -q "s.*online"; then
+if pm2 list | grep -q "http-meta.*online" && pm2 list | grep -q "Sub-Store.*online"; then
   log "服务启动成功!"
   
   # 显示访问信息
