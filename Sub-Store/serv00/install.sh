@@ -50,7 +50,7 @@ download_with_retry() {
 }
 
 # 主程序开始
-log "开始安装 Sub-Store..."
+log "开始安装 s..."
 
 # 检查依赖
 if ! check_dependencies; then
@@ -60,7 +60,7 @@ if ! check_dependencies; then
 fi
 
 # 检查是否已安装
-if [ -d "$HOME/Sub-Store" ] && [ -f "$HOME/Sub-Store/sub-store.bundle.js" ]; then
+if [ -d "$HOME/s" ] && [ -f "$HOME/s/sub-store.bundle.js" ]; then
   read -p "检测到已存在安装，是否继续? (y/n): " confirm
   if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
     exit 0
@@ -69,23 +69,25 @@ fi
 
 # 设置环境变量
 log "配置环境变量..."
-grep -q "INSTALL_DIR=\"\$HOME/Sub-Store\"" ~/.bashrc || {
+grep -q "INSTALL_DIR=\"\$HOME/s\"" ~/.bashrc || {
   echo '# 基本文件夹变量' >> ~/.bashrc
-  echo 'export INSTALL_DIR="$HOME/Sub-Store"' >> ~/.bashrc
+  echo 'export INSTALL_DIR="$HOME/s"' >> ~/.bashrc
   echo 'export DATA_DIR="$INSTALL_DIR/data"' >> ~/.bashrc
   echo 'export FRONTEND_DIR="$INSTALL_DIR/frontend"' >> ~/.bashrc
 
   echo '# http-meta变量' >> ~/.bashrc
   echo 'export META_FOLDER="$DATA_DIR"' >> ~/.bashrc
   echo 'export HOST=::' >> ~/.bashrc
-  echo 'export PORT=9876' >> ~/.bashrc
+  echo 'export PORT=9877' >> ~/.bashrc
 
   echo '# Sub-Store变量' >> ~/.bashrc
   echo 'export SUB_STORE_FRONTEND_PATH="$FRONTEND_DIR"' >> ~/.bashrc
   echo 'export SUB_STORE_MMDB_COUNTRY_PATH="$DATA_DIR/GeoLite2-Country.mmdb"' >> ~/.bashrc
   echo 'export SUB_STORE_MMDB_ASN_PATH="$DATA_DIR/GeoLite2-ASN.mmdb"' >> ~/.bashrc
-  echo 'export SUB_STORE_BACKEND_API_PORT=19993' >> ~/.bashrc
-  echo 'export SUB_STORE_FRONTEND_PORT=19992' >> ~/.bashrc
+  echo 'export SUB_STORE_BACKEND_PREFIX=true' >> ~/.bashrc
+  echo 'export SUB_STORE_FRONTEND_BACKEND_PATH=/rainyhush' >> ~/.bashrc
+  echo 'export SUB_STORE_BACKEND_API_PORT=1999' >> ~/.bashrc
+  echo 'export SUB_STORE_FRONTEND_PORT=1998' >> ~/.bashrc
 }
 
 # 加载环境变量
@@ -130,10 +132,7 @@ if [ -z "$version" ]; then
   version="v1.18.0"
 fi
 
-arch=$(arch | sed s/aarch64/arm64/ | sed s/x86_64/amd64-compatible/)
-log "检测到架构: $arch, 版本: $version"
-
-mihomo_url="https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-linux-$arch-$version.gz"
+mihomo_url="https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo-freebsd-amd64-$version.gz"
 log "下载 mihomo..."
 download_with_retry "$mihomo_url" "$DATA_DIR/http-meta.gz"
 
@@ -144,15 +143,15 @@ chmod +x "$DATA_DIR/http-meta"
 # 启动服务
 log "启动 http-meta 服务..."
 pm2 delete http-meta 2>/dev/null || true
-pm2 start "$DATA_DIR/http-meta.bundle.js" --name "http-meta"
+pm2 start "$DATA_DIR/http-meta.bundle.js" --name "h"
 
 log "启动 Sub-Store 服务..."
 pm2 delete Sub-Store 2>/dev/null || true
-pm2 start sub-store.bundle.js --name "Sub-Store"
+pm2 start sub-store.bundle.js --name "s"
 
 # 检查服务
 sleep 3
-if pm2 list | grep -q "http-meta.*online" && pm2 list | grep -q "Sub-Store.*online"; then
+if pm2 list | grep -q "h.*online" && pm2 list | grep -q "s.*online"; then
   log "服务启动成功!"
   
   # 显示访问信息
