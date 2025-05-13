@@ -49,7 +49,7 @@ download_with_retry() {
 }
 
 # 主程序开始
-log "开始安装 Sub-Store..."
+log "开始安装 sub-store..."
 
 # 检查依赖
 if ! check_dependencies; then
@@ -59,7 +59,7 @@ if ! check_dependencies; then
 fi
 
 # 检查是否已安装
-if [ -d "$HOME/Sub-Store" ] && [ -f "$HOME/Sub-Store/sub-store.bundle.js" ]; then
+if [ -d "$HOME/sub-store" ] && [ -f "$HOME/sub-store/sub-store.bundle.js" ]; then
   read -p "检测到已存在安装，是否继续? (y/n): " confirm
   if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
     exit 0
@@ -68,9 +68,9 @@ fi
 
 # 设置环境变量
 log "配置环境变量..."
-grep -q "INSTALL_DIR=\"\$HOME/Sub-Store\"" ~/.bashrc || {
+grep -q "INSTALL_DIR=\"\$HOME/sub-store\"" ~/.bashrc || {
   echo '# 基本文件夹变量' >> ~/.bashrc
-  echo 'export INSTALL_DIR="$HOME/Sub-Store"' >> ~/.bashrc
+  echo 'export INSTALL_DIR="$HOME/sub-store"' >> ~/.bashrc
   echo 'export DATA_DIR="$INSTALL_DIR/data"' >> ~/.bashrc
   echo 'export FRONTEND_DIR="$INSTALL_DIR/frontend"' >> ~/.bashrc
 
@@ -79,7 +79,7 @@ grep -q "INSTALL_DIR=\"\$HOME/Sub-Store\"" ~/.bashrc || {
   echo 'export HOST=::' >> ~/.bashrc
   echo 'export PORT=9876' >> ~/.bashrc
 
-  echo '# Sub-Store变量' >> ~/.bashrc
+  echo '# sub-store变量' >> ~/.bashrc
   echo 'export SUB_STORE_FRONTEND_PATH="$FRONTEND_DIR"' >> ~/.bashrc
   echo 'export SUB_STORE_MMDB_COUNTRY_PATH="$DATA_DIR/GeoLite2-Country.mmdb"' >> ~/.bashrc
   echo 'export SUB_STORE_MMDB_ASN_PATH="$DATA_DIR/GeoLite2-ASN.mmdb"' >> ~/.bashrc
@@ -98,10 +98,10 @@ mkdir -p "$INSTALL_DIR" "$DATA_DIR" "$FRONTEND_DIR"
 cd "$INSTALL_DIR"
 
 # 下载前端和后端
-log "下载 Sub-Store 后端..."
+log "下载 sub-store 后端..."
 download_with_retry "https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store.bundle.js" "sub-store.bundle.js"
 
-log "下载 Sub-Store 前端..."
+log "下载 sub-store 前端..."
 download_with_retry "https://github.com/sub-store-org/Sub-Store-Front-End/releases/latest/download/dist.zip" "dist.zip"
 unzip -o dist.zip
 if [ -d "dist" ]; then
@@ -147,20 +147,20 @@ log "启动 http-meta 服务..."
 pm2 delete http-meta 2>/dev/null || true
 pm2 start "$DATA_DIR/http-meta.bundle.js" --name "http-meta"
 
-log "启动 Sub-Store 服务..."
+log "启动 sub-store 服务..."
 pm2 delete Sub-Store 2>/dev/null || true
-pm2 start sub-store.bundle.js --name "Sub-Store"
+pm2 start sub-store.bundle.js --name "sub-store"
 
 # 检查服务
 sleep 3
-if pm2 list | grep -q "http-meta.*online" && pm2 list | grep -q "Sub-Store.*online"; then
+if pm2 list | grep -q "http-meta.*online" && pm2 list | grep -q "sub-store.*online"; then
   log "服务启动成功!"
   
   # 显示访问信息
-  ipv4_address=$(curl 4.icanhazip.com 2>/dev/null)
-  log "Sub-Store 已成功安装，您可以通过以下地址访问:"
-  log "- 本地访问: http://127.0.0.1:19992"
-  log "- 网络访问: http://${ipv4_address}:19992"
+  #ipv4_address=$(curl 4.icanhazip.com 2>/dev/null)
+  log "sub-store 已成功安装"
+  #log "- 本地访问: http://127.0.0.1:19992"
+  #log "- 网络访问: http://${ipv4_address}:19992"
 else
   log "服务启动异常，请检查日志:"
   log "- 查看日志: pm2 logs"
