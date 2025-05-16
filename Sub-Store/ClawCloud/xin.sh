@@ -68,29 +68,29 @@ fi
 
 # 设置环境变量
 log "配置环境变量..."
-grep -q "INSTALL_DIR=\"\$HOME/sub-store\"" ~/.bashrc || {
-  echo '# 基本文件夹变量' >> ~/.bashrc
-  echo 'export INSTALL_DIR="$HOME/sub-store"' >> ~/.bashrc
-  echo 'export DATA_DIR="$INSTALL_DIR/data"' >> ~/.bashrc
-  echo 'export FRONTEND_DIR="$INSTALL_DIR/frontend"' >> ~/.bashrc
+grep -q "INSTALL_DIR=\"\$HOME/sub-store\"" ~/.zsh_env || {
+  echo '# 基本文件夹变量' >> ~/.zsh_env
+  echo 'export INSTALL_DIR="$HOME/sub-store"' >> ~/.zsh_env
+  echo 'export DATA_DIR="$INSTALL_DIR/data"' >> ~/.zsh_env
+  echo 'export FRONTEND_DIR="$INSTALL_DIR/frontend"' >> ~/.zsh_env
 
-  echo '# http-meta变量' >> ~/.bashrc
-  echo 'export META_FOLDER="$DATA_DIR"' >> ~/.bashrc
-  echo 'export HOST=::' >> ~/.bashrc
-  echo 'export PORT=9876' >> ~/.bashrc
+  echo '# http-meta变量' >> ~/.zsh_env
+  echo 'export META_FOLDER="$DATA_DIR"' >> ~/.zsh_env
+  echo 'export HOST=::' >> ~/.zsh_env
+  echo 'export PORT=9876' >> ~/.zsh_env
 
-  echo '# sub-store变量' >> ~/.bashrc
-  echo 'export SUB_STORE_FRONTEND_PATH="$FRONTEND_DIR"' >> ~/.bashrc
-  echo 'export SUB_STORE_MMDB_COUNTRY_PATH="$DATA_DIR/GeoLite2-Country.mmdb"' >> ~/.bashrc
-  echo 'export SUB_STORE_MMDB_ASN_PATH="$DATA_DIR/GeoLite2-ASN.mmdb"' >> ~/.bashrc
-  echo 'export SUB_STORE_BACKEND_PREFIX=true' >> ~/.bashrc
-  echo 'export SUB_STORE_FRONTEND_BACKEND_PATH=/rainyhush' >> ~/.bashrc
-  echo 'export SUB_STORE_BACKEND_API_PORT=19993' >> ~/.bashrc
-  echo 'export SUB_STORE_FRONTEND_PORT=19992' >> ~/.bashrc
+  echo '# sub-store变量' >> ~/.zsh_env
+  echo 'export SUB_STORE_FRONTEND_PATH="$FRONTEND_DIR"' >> ~/.zsh_env
+  echo 'export SUB_STORE_MMDB_COUNTRY_PATH="$DATA_DIR/GeoLite2-Country.mmdb"' >> ~/.zsh_env
+  echo 'export SUB_STORE_MMDB_ASN_PATH="$DATA_DIR/GeoLite2-ASN.mmdb"' >> ~/.zsh_env
+  echo 'export SUB_STORE_BACKEND_PREFIX=true' >> ~/.zsh_env
+  echo 'export SUB_STORE_FRONTEND_BACKEND_PATH=/rainyhush' >> ~/.zsh_env
+  echo 'export SUB_STORE_BACKEND_API_PORT=19993' >> ~/.zsh_env
+  echo 'export SUB_STORE_FRONTEND_PORT=19992' >> ~/.zsh_env
 }
 
 # 加载环境变量
-. ~/.bashrc
+. ~/.zsh_env
 
 # 创建安装目录
 log "创建安装目录..."
