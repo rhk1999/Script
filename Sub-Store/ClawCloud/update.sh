@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # 脚本遇到错误立即退出
 
-pm2 stop Sub-Store && pm2 stop http-meta
+pm2 stop sub-store && pm2 stop http-meta
 
 # --- 定义下载链接 ---
 SUB_STORE_BUNDLE_URL="https://github.com/sub-store-org/Sub-Store/releases/latest/download/sub-store.bundle.js"
@@ -96,8 +96,8 @@ echo "Starting http-meta..."
 pm2 start "$DATA_DIR/http-meta.bundle.js" --name "http-meta"
 echo "http-meta started successfully!"
 
-echo "Starting Sub-Store..."
-pm2 start "$INSTALL_DIR/sub-store.bundle.js" --name "Sub-Store"
-echo "Sub-Store started successfully!"
+echo "Starting sub-store..."
+pm2 start "$INSTALL_DIR/sub-store.bundle.js" --name "sub-store"
+echo "sub-store started successfully!"
 
-echo "Sub-Store and http-meta started successfully!"
+echo "sub-store and http-meta started successfully!"
