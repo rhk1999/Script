@@ -8,12 +8,12 @@ if [ $? -ne 0 ]; then
 fi
 echo "http-meta 服务启动成功。"
 
-pm2 start "$INSTALL_DIR/sub-store.bundle.js" --name "Sub-Store"
+pm2 start "$INSTALL_DIR/sub-store.bundle.js" --name "sub-store"
 if [ $? -ne 0 ]; then
-  echo "启动 Sub-Store 服务失败！"
+  echo "启动 sub-store 服务失败！"
   exit 1 # 退出脚本，表示失败
 fi
 
-echo "Sub-Store 服务启动成功。"
+echo "sub-store 服务启动成功。"
 echo "服务启动完成。"
 exit 0 # 脚本执行成功退出
