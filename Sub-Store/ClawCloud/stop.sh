@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # 服务停止脚本
 echo "正在停止服务..."
 pm2 stop http-meta && pm2 stop sub-store
