@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # 服务启动脚本
 echo "正在启动服务..."
 pm2 start "$DATA_DIR/http-meta.bundle.js" --name "http-meta"
